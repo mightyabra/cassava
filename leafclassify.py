@@ -92,7 +92,7 @@ model = tf.keras.models.load_model('ai.h5')  # Replace with your model path
 
 def predict(image):
     # Resize the image to match the model's expected input size (224x224)
-    image = np.array(image.resize((64, 64)), dtype=np.float32)
+    image = np.resize(image, (64, 64, 3))
     
     # Normalize the image (this is important for consistency with training)
     image = image / 255.0
@@ -100,8 +100,9 @@ def predict(image):
     # Expand dimensions to add a batch dimension (expected input: [batch_size, height, width, channels])
     image = np.expand_dims(image, axis=0)
     
+    
     # Make a prediction using the loaded Keras model
-    predictions = model.predict(image)
+    predictions = cnn_model.predict(image)
     
     # Get the probabilities from the prediction result
     probabilities = predictions[0]
@@ -116,11 +117,8 @@ def predict(image):
     print(probabilities)
     
     # Attach each label to its predicted probability
-    for i, probability in enumerate(probabilities):
-        label_to_probabilities.append([labels[i], float(probability)])
     
     # Sort the labels based on their probability score
-    sorted(label_to_probabilities, key=lambda element: element[1])
     
     # Find the highest probability
     high = np.argmax(probabilities)
