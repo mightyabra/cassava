@@ -17,6 +17,16 @@ import base64
 # fig = plt.figure()
 #st.title("<h1 style='color: green;'>AI4AFS-UENR</h1>")
 st.markdown("<h1 style='color: green;'>Cassava Disease/Pest Detection App</h1>", unsafe_allow_html=True)
+st.markdown(
+    """
+    <style>
+    body {
+        color: black !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 #st.header('cassava Disease/Pest Detection App')
 
 #st.markdown("Prediction Platform")
@@ -124,7 +134,7 @@ def predict(image):
     high=np.argmax(probabilities)
     result_1=label_new[high]
     confidence=100 * np.max(probabilities)
-    result="Category:"+ "  "+str(result_1) +"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
+    result="Category:"+ "  "+st.write(str(result_1))+"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
 
 
     return result
