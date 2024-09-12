@@ -15,7 +15,7 @@ import base64
 
 
 # fig = plt.figure()
-st.title('AI4AFS-UENR')
+st.title('red:[AI4AFS-UENR]')
 st.header('cassava Disease/Pest Detection App')
 
 #st.markdown("Prediction Platform")
