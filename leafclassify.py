@@ -92,7 +92,7 @@ model = tf.keras.models.load_model('ai.h5')  # Replace with your model path
 
 def predict(image):
     # Resize the image to match the model's expected input size (224x224)
-    image = np.array(image.resize((224, 224)), dtype=np.float32)
+    image = np.array(image.resize((64, 64)), dtype=np.float32)
     
     # Normalize the image (this is important for consistency with training)
     image = image / 255.0
