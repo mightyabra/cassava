@@ -15,11 +15,8 @@ import base64
 
 
 # fig = plt.figure()
-
-st.markdown("<h1 style='color: green;'>Cassava Disease/Pest Detection App</h1>", unsafe_allow_html=True)
-
-#st.title("Cassava Disease/Pest Detection App")
-#st.header('cassava Disease/Pest Detection App')
+st.title(':white[AI4AFS-UENR]')
+st.header(':white[cassava Disease/Pest Detection App]')
 
 #st.markdown("Prediction Platform")
 def set_background(main_bg):  # local image
@@ -31,10 +28,7 @@ def set_background(main_bg):  # local image
              .stApp {{
                  background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
                  background-size: cover
-                 
              }}
-            
-
              </style>
              """,
         unsafe_allow_html=True
@@ -42,26 +36,6 @@ def set_background(main_bg):  # local image
 
 
 set_background('cassava.png')
-#st.markdown("Prediction Platform")
-def set_background(main_bg):  # local image
-    # set bg name
-    main_bg_ext = "png"
-    st.markdown(
-        f"""
-             <style>
-             .stApp {{
-                 background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
-                 background-size: cover
-             }}
-             </style>
-             """,
-        unsafe_allow_html=True
-    )
-
-
-set_background('tomato.png')
-
-
 def main():
     file_uploaded = st.file_uploader("Choose File", type=["png", "jpg", "jpeg"])
     
@@ -80,7 +54,7 @@ def main():
                 predictions = predict(image)
 
                 time.sleep(1)
-                st.success('Detect')
+                st.success('Results')
                 st.write(predictions)
 
 
@@ -113,7 +87,7 @@ def main():
 ## this code for format tflite file
 def predict(image):
     #model = "leaves_model.tflite"
-    model="tomato.tflite"
+    model="cassava.tflite"
     interpreter = tf.lite.Interpreter(model_path=model)
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
@@ -130,8 +104,8 @@ def predict(image):
     output_data = interpreter.get_tensor(output_details[0]['index'])
     probabilities = np.array(output_data[0])
 
-    labels = {0: "healthy", 1: "leaf blight", 2: "leaf curl", 3: "non type", 4:"septoria leaf spot", 5: "verticulium wilt" }
-    label_new=["healthy", "leaf blight", "leaf curl", "non type", "septoria leaf spot", "verticulium wilt" ]
+    labels = {0: "bacterial blight", 1: "brown spot", 2: "green mite", 3: "healthy", 4: "mosaic", 5: "non type" }
+    label_new=["bacterial blight", "brown spot", "green mite", "healthy", "mosaic", "non type" ]
 
 
     label_to_probabilities = []
@@ -149,8 +123,7 @@ def predict(image):
     high=np.argmax(probabilities)
     result_1=label_new[high]
     confidence=100 * np.max(probabilities)
-    result="Category:"+ "  "+str(result_1) +"     "+ "\nConfidence: "+ " "+ str(confidence)+ "%"
-
+    result="Category:"+ "  "+str(result_1) +"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
 
     return result
 
