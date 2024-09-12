@@ -85,47 +85,57 @@ def main():
 
 
 ## this code for format tflite file
+
+
+# Load the .h5 model (Keras SavedModel format)
+model = tf.keras.models.load_model('cnn_model.h5')  # Replace with your model path
+
 def predict(image):
-    #model = "leaves_model.tflite"
-    model="cassava.tflite"
-    interpreter = tf.lite.Interpreter(model_path=model)
-    interpreter.allocate_tensors()
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
-
-    input_shape = input_details[0]['shape']
+    # Resize the image to match the model's expected input size (224x224)
     image = np.array(image.resize((224, 224)), dtype=np.float32)
-
+    
+    # Normalize the image (this is important for consistency with training)
     image = image / 255.0
+    
+    # Expand dimensions to add a batch dimension (expected input: [batch_size, height, width, channels])
     image = np.expand_dims(image, axis=0)
-
-    interpreter.set_tensor(input_details[0]['index'], image)
-    interpreter.invoke()
-    output_data = interpreter.get_tensor(output_details[0]['index'])
-    probabilities = np.array(output_data[0])
-
-    labels = {0: "bacterial blight", 1: "brown spot", 2: "green mite", 3: "healthy", 4: "mosaic", 5: "non type" }
-    label_new=["bacterial blight", "brown spot", "green mite", "healthy", "mosaic", "non type" ]
-
-
+    
+    # Make a prediction using the loaded Keras model
+    predictions = model.predict(image)
+    
+    # Get the probabilities from the prediction result
+    probabilities = predictions[0]
+    
+    # Define labels for your classes
+    labels = {0: "healthy", 1: "leaf blight", 2: "leaf curl", 3: "non type", 4: "septoria leaf spot", 5: "verticulium wilt"}
+    label_new = ["healthy", "leaf blight", "leaf curl", "non type", "septoria leaf spot", "verticulium wilt"]
+    
     label_to_probabilities = []
+    
+    # Print the prediction probabilities
     print(probabilities)
-
+    
+    # Attach each label to its predicted probability
     for i, probability in enumerate(probabilities):
         label_to_probabilities.append([labels[i], float(probability)])
-
+    
+    # Sort the labels based on their probability score
     sorted(label_to_probabilities, key=lambda element: element[1])
-
-    #result = {'healthy': 0, 'diseased': 0}
-    #result = {'leaf Blight': 0, 'brown spot': 0, 'greenmite': 0, 'healthy': 0, 'mosaic': 0}
-    #result = f"{label_to_probabilities[np.argmax(probability)][0]} with a {(100 * np.max(probabilities)).round(2)} % confidence."
-    #result=f"{} with a {}"
-    high=np.argmax(probabilities)
-    result_1=label_new[high]
-    confidence=100 * np.max(probabilities)
-    result="Category:"+ "  "+str(result_1) +"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
-
+    
+    # Find the highest probability
+    high = np.argmax(probabilities)
+    result_1 = label_new[high]
+    confidence = 100 * np.max(probabilities)
+    
+    # Prepare the result string with the category and confidence
+    result = "Category: " + str(result_1) + "\nConfidence: " + str(confidence) + "%"
+    
     return result
+
+# Example usage with a PIL image
+# image = Image.open('path_to_image.jpg')
+# result = predict(image)
+# print(result)
 
 
 if __name__ == "__main__":
