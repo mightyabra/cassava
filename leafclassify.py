@@ -102,7 +102,7 @@ def predict(image):
     
     
     # Make a prediction using the loaded Keras model
-    predictions = cnn_model.predict(image)
+    predictions = model.predict(image)
     
     # Get the probabilities from the prediction result
     probabilities = predictions[0]
