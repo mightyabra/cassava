@@ -126,7 +126,7 @@ def predict(image):
     confidence = 100 * np.max(probabilities)
     
     # Prepare the result string with the category and confidence
-    result = "Category: " + str(result_1) + "\nConfidence: " + str(confidence) + "%"
+    result = "Category: " + str(result_1) + "\n Confidence: " + str(confidence) + "%"
     
     return result
 
