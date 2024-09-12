@@ -125,7 +125,7 @@ def predict(image):
     result_1=label_new[high]
     confidence=100 * np.max(probabilities)
     #result="Category:"+ "  "+str(result_1) +"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
-    result="Category:"+ "  "+"<h1 style='color: green;'>str(result_1)</h1>" +"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
+    result="Category:"+ "  "+"str(result_1)+"     "+ "\n Confidence: "+ " "+ str(confidence)+ "%"
 
     return result
 
