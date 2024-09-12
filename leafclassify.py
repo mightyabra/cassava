@@ -88,7 +88,7 @@ def main():
 
 
 # Load the .h5 model (Keras SavedModel format)
-model = tf.keras.models.load_model('cnn_model.h5')  # Replace with your model path
+model = tf.keras.models.load_model('ai.h5')  # Replace with your model path
 
 def predict(image):
     # Resize the image to match the model's expected input size (224x224)
