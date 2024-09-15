@@ -58,35 +58,6 @@ def main():
                 st.write(predictions)
 
 
-## This code is for saved model in format as H5 file
-
-
-# def predict(image):
-#     classifier_model = "HD_Model.h5"
-
-#     model = load_model(classifier_model)
-
-#     test_image = image.resize((200,200))
-#     test_image = preprocessing.image.img_to_array(test_image)
-#     test_image = test_image / 255.0
-#     test_image = np.expand_dims(test_image, axis=0)
-#     class_names = {0 : 'healthy', 1 :'diseased'}
-
-#     predictions = model.predict(test_image)
-#     scores = tf.nn.softmax(predictions[0])
-#     scores = scores.numpy()
-
-
-#     result = f"{class_names[np.argmax(scores)]} with a { (100 * np.max(scores)).round(2) } % confidence."
-#     return result
-
-
-## -----------------------------------------------------x---------------------------------------x--------------------------------------------##
-
-
-## this code for format tflite file
-
-
 # Load the .h5 model (Keras SavedModel format)
 model = tf.keras.models.load_model('ai.h5')  # Replace with your model path
 
